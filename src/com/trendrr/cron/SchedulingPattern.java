@@ -26,7 +26,7 @@ import java.util.Iterator;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
 
-import com.trendrr.common.enums.TimeFrame;
+import com.trendrr.oss.Timeframe;
 
 /**
  * <p>
@@ -572,8 +572,8 @@ public class SchedulingPattern {
 	 */
 	public Date getNextMatchingDate(Date start){
 		Date maybeMatch = start;
-		while(maybeMatch.before(TimeFrame.MINUTES.add(TimeFrame.YEARS.add(start, 1), 1))){
-			maybeMatch = TimeFrame.MINUTES.add(maybeMatch, 1);
+		while(maybeMatch.before(Timeframe.MINUTES.add(Timeframe.YEARS.add(start, 1), 1))){
+			maybeMatch = Timeframe.MINUTES.add(maybeMatch, 1);
 			if(this.match(maybeMatch))
 				return maybeMatch;
 		}

@@ -12,12 +12,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
-import com.trendrr.common.enums.TimeFrame;
+import com.trendrr.oss.Timeframe;
 import com.trendrr.oss.IsoDateUtil;
 
 
@@ -47,10 +48,10 @@ public class CronTest {
 		}
 		
 		
-		Calendar cal = Calendar.getInstance(TimeFrame.getTrendrrTimeZone());
+		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("EST"));
 		List<CronTask> t = new ArrayList<CronTask>();
 		while (t.isEmpty()) {
-			date = TimeFrame.MINUTES.add(date, 1);
+			date = Timeframe.MINUTES.add(date, 1);
 //			System.out.println(date);
 			cal.setTime(date);
 			t = tasks.getTasksToExecute(cal);
@@ -107,6 +108,10 @@ public class CronTest {
 	 */
 	private Date normalize(String isoDate){
 		Date date = IsoDateUtil.parse(isoDate);
-		return TimeFrame.MINUTES.start(date);
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		c.set(Calendar.MILLISECOND, 0);
+		c.set(Calendar.SECOND, 0);
+		return c.getTime();
 	}
 }
