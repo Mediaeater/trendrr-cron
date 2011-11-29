@@ -231,14 +231,14 @@ public class SchedulingPattern {
 	protected int matcherSize = 0;
 
 	/**
-	 * Builds a SchedulingPattern parsing it from a string.
-	 * 
-	 * @param pattern
-	 *            The pattern as a crontab-like string.
-	 * @throws InvalidPatternException
-	 *             If the supplied string is not a valid pattern.
+	 * What timezone to use? 
+	 * defaults to EST.
 	 */
-	public SchedulingPattern(String pattern) throws InvalidPatternException {
+	protected TimeZone timezone;
+	
+	
+	public SchedulingPattern(String pattern, TimeZone tz) throws InvalidPatternException {
+		this.timezone = tz;
 		if ("hourly".equalsIgnoreCase(pattern)) {
 			pattern = "0 * * * *";
 		} else if ("daily".equalsIgnoreCase(pattern) || "midnight".equalsIgnoreCase(pattern) ) {
@@ -302,6 +302,18 @@ public class SchedulingPattern {
 			}
 			matcherSize++;
 		}
+	}
+	
+	/**
+	 * Builds a SchedulingPattern parsing it from a string.
+	 * 
+	 * @param pattern
+	 *            The pattern as a crontab-like string.
+	 * @throws InvalidPatternException
+	 *             If the supplied string is not a valid pattern.
+	 */
+	public SchedulingPattern(String pattern) throws InvalidPatternException {
+		this(pattern, TimeZone.getTimeZone("EST"));
 	}
 
 	/**
@@ -522,7 +534,7 @@ public class SchedulingPattern {
 	 * @return true if the given timestamp matches the pattern.
 	 */
 	public boolean match(long millis) {
-		return match(TimeZone.getDefault(), millis);
+		return match(this.timezone, millis);
 	}
 
 	/**
