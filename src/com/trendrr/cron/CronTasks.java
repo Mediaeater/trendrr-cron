@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -59,8 +60,7 @@ public class CronTasks {
 			if (c == null)
 				continue;
 			for (String pattern : c.value()) {
-				System.out.println("Adding pattern: " + pattern);
-				CronTask t = new CronTask(cls, m, pattern);
+				CronTask t = new CronTask(cls, m, pattern, TimeZone.getTimeZone(c.timezone()));
 				this.tasks.add(t);
 				tasks.add(t);
 			}

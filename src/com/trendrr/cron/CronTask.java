@@ -5,6 +5,7 @@ package com.trendrr.cron;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.TimeZone;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,8 +36,8 @@ public class CronTask {
 		this.cls = cls;
 	}
 	
-	public CronTask(Class cls, Method method, String pattern) throws InvalidPatternException {
-		this(cls, method, new SchedulingPattern(pattern));
+	public CronTask(Class cls, Method method, String pattern, TimeZone tz) throws InvalidPatternException {
+		this(cls, method, new SchedulingPattern(pattern, tz));
 	}
 	
 	public SchedulingPattern getPattern() {

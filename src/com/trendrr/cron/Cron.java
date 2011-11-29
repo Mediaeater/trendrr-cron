@@ -21,4 +21,5 @@ import org.apache.commons.logging.LogFactory;
 @Target(ElementType.METHOD)
 public @interface Cron {
 	String[] value();
+	String timezone() default "EST";
 }
