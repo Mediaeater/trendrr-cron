@@ -305,7 +305,7 @@ public class SchedulingPattern {
 	}
 	
 	/**
-	 * Builds a SchedulingPattern parsing it from a string. Uses the default system timezone.
+	 * Builds a SchedulingPattern parsing it from a string. Defaults to EST timezone (I know, I know, but we like it that way :))
 	 * 
 	 * @param pattern
 	 *            The pattern as a crontab-like string.
@@ -313,7 +313,7 @@ public class SchedulingPattern {
 	 *             If the supplied string is not a valid pattern.
 	 */
 	public SchedulingPattern(String pattern) throws InvalidPatternException {
-		this(pattern, TimeZone.getDefault());
+		this(pattern, TimeZone.getTimeZone("EST"));
 	}
 
 	/**
