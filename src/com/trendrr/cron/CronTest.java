@@ -101,6 +101,28 @@ public class CronTest {
 		}
 	}
 	
+	
+	@Test
+	public void testPrevMatch() throws InvalidPatternException{
+		Date date = IsoDateUtil.parse("2011-01-03T00:01:00Z");
+		System.out.println("Start date is " + date.toString());
+
+		Map<String, String> patternMap = new HashMap<String, String>();
+		patternMap.put("hourly", "2011-01-03T00:00:00.00Z");
+//		patternMap.put("daily", "2011-01-03T05:00:07.00Z");
+//		patternMap.put("weekly", "2011-01-09T05:00:07.00Z");
+//		patternMap.put("monthly", "2011-02-01T05:00:07.00Z");
+//		patternMap.put("yearly", "2012-01-01T05:00:07.00Z");
+		for(String pattern : patternMap.keySet()){
+			SchedulingPattern sp = new SchedulingPattern(pattern);
+			Date start = new Date();
+			Date next = sp.getPrevMatchingDate(date);
+			long millis = new Date().getTime() - start.getTime();
+			assertEquals(IsoDateUtil.getIsoDate(next), patternMap.get(pattern));
+			System.out.println("Calculated " + pattern + " in " + millis + " millis. It was " + IsoDateUtil.getIsoDate(next));
+		}
+	}
+	
 	/**
 	 * Parse date and go to the start of the minute (good enough for us)
 	 * @param isoDate
