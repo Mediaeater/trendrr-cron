@@ -596,15 +596,12 @@ public class SchedulingPattern {
 	}
 
 	/**
+	 * 
+	 * Will get the previous matching date.
+	 * 
 	 * Warning: this is the slow/ naive implementation, just loops through minutes. Below are some
 	 * example runtimes. Returns null if nothing is found within the next year
 	 * 
-	 * Start date is Sun Jan 02 19:01:07 EST 2011
-	 * Calculated hourly in 22 millis. It was Sun Jan 02 20:00:07 EST 2011
-	 * Calculated daily in 97 millis. It was Mon Jan 03 00:00:07 EST 2011
-	 * Calculated weekly in 1299 millis. It was Sun Jan 09 00:00:07 EST 2011
-	 * Calculated monthly in 826 millis. It was Tue Feb 01 00:00:07 EST 2011
-	 * Calculated yearly in 2249 millis. It was Sun Jan 01 00:00:07 EST 2012
 	 * @param start
 	 * @return
 	 */
@@ -616,6 +613,7 @@ public class SchedulingPattern {
 			maybeMatch = Timeframe.MINUTES.add(maybeMatch, -1);
 			if(this.match(maybeMatch))
 				return maybeMatch;
+			
 		}
 		//if we drop out, this means we've been searching forever with no match - return null
 		return null;
