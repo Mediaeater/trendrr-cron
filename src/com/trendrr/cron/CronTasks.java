@@ -69,6 +69,28 @@ public class CronTasks {
 	}
 	
 	/**
+	 * Register an object with the specified pattern and timezone.  
+	 * 
+	 * note that task.execute will NOT work for this.
+	 * 
+	 * 
+	 * @param pattern
+	 * @param object
+	 * @return
+	 * @throws InvalidPatternException
+	 */
+	public List<CronTask> register(String pattern, Object object, TimeZone tz) throws InvalidPatternException {
+		CronTask t = new CronTask(object.getClass(), null, pattern, tz);
+		t.setObject(object);
+		this.tasks.add(t);
+		
+		List<CronTask> tasks = new ArrayList<CronTask>();
+		tasks.add(t);
+		return tasks;
+	}
+	
+	
+	/**
 	 * Searches the package for any Cron annotated methods.
 	 * 
 	 * will log.warn any exceptions and continue on.
