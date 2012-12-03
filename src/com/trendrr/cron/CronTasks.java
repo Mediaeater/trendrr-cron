@@ -119,7 +119,7 @@ public class CronTasks {
 	}
 	
 	/**
-	 * returns all the tasks that are due to execute at the given time.
+	 * returns all the tasks that are due to execute at the exact given time.
 	 * 
 	 * returns empty list on no tasks
 	 * @return
@@ -130,8 +130,30 @@ public class CronTasks {
 		// Good enough for now...
 		for (CronTask t : this.tasks) {
 			if (t.getPattern().match(date)) {
+				t.setDate(date);
 				tasks.add(t);
 			}
+		}
+		return tasks;
+	}
+	
+	/**
+	 * returns all the tasks that are due to execute between 
+	 * start(inclusive) and end(exclusive)
+	 * 
+	 * returns empty list on no tasks
+	 * @return
+	 */
+	public List<CronTask> getTasksToExecute(Calendar start, Calendar end) {
+		List<CronTask> tasks = new ArrayList<CronTask>();
+		// This might be slightly slow if there are tons of possible tasks,
+		// Good enough for now...
+		for (CronTask t : this.tasks) {
+			for (Calendar cal : t.getPattern().getMatchingDates(start, end)) {
+				t.setDate(cal);
+				tasks.add(t);
+			}
+			
 		}
 		return tasks;
 	}

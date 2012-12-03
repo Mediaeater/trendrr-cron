@@ -23,6 +23,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
 
@@ -595,6 +596,34 @@ public class SchedulingPattern {
 		return null;
 	}
 
+	/**
+	 * returns all the matching dates between the start (inclusive) and end (exclusive).  This is a naive implementation so 
+	 * is slow for long stretches.
+	 * @param start
+	 * @param end
+	 * @return
+	 */
+	public List<Calendar> getMatchingDates(Calendar start, Calendar end) {
+		Calendar cur = Calendar.getInstance(start.getTimeZone());
+		cur.setTime(start.getTime());
+		cur.set(Calendar.SECOND, 0);
+		cur.set(Calendar.MILLISECOND, 0);
+		
+		Calendar e = Calendar.getInstance(end.getTimeZone());
+		cur.setTime(end.getTime());
+		cur.set(Calendar.SECOND, 0);
+		cur.set(Calendar.MILLISECOND, 0);
+		
+		List<Calendar> matching = new ArrayList<Calendar>();
+		while(cur.before(e)) {
+			if (this.match(cur)) {
+				matching.add(cur);
+			}
+			cur.add(Calendar.MINUTE, 1);
+		}
+		return matching;
+	}
+	
 	/**
 	 * 
 	 * Will get the previous matching date.

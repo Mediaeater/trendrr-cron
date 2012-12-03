@@ -5,6 +5,8 @@ package com.trendrr.cron;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 import org.apache.commons.logging.Log;
@@ -26,8 +28,10 @@ public class CronTask {
 	protected Method method;
 	protected Class cls;
 	protected Object object = null;
+	protected Calendar date = null;
 	
 	
+
 	
 
 	public CronTask(Class cls, Method method, SchedulingPattern pattern) {
@@ -66,6 +70,18 @@ public class CronTask {
 	
 	public Class getCls() {
 		return cls;
+	}
+	
+	/**
+	 * this is the date when the task was due to execute (this is set by the CronTasks object)
+	 * @return
+	 */
+	public Calendar getDate() {
+		return this.date;
+	}
+
+	public void setDate(Calendar due) {
+		this.date = due;
 	}
 	
 	/**
