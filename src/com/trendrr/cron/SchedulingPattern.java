@@ -610,9 +610,9 @@ public class SchedulingPattern {
 		cur.set(Calendar.MILLISECOND, 0);
 		
 		Calendar e = Calendar.getInstance(end.getTimeZone());
-		cur.setTime(end.getTime());
-		cur.set(Calendar.SECOND, 0);
-		cur.set(Calendar.MILLISECOND, 0);
+		e.setTime(end.getTime());
+		e.set(Calendar.SECOND, 0);
+		e.set(Calendar.MILLISECOND, 0);
 		
 		List<Calendar> matching = new ArrayList<Calendar>();
 		while(cur.before(e)) {
