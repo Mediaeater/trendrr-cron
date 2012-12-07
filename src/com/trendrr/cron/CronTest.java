@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 
+import junit.framework.Assert;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
@@ -35,6 +37,20 @@ public class CronTest {
 //		new CronTest().test();
 //		
 //	}
+	
+	@Test
+	public void testGetTasksToExecute() throws Exception{
+		CronTasks tasks = new CronTasks();
+
+		tasks.register("33 * * * *", "33", TimeZone.getDefault());
+		
+		tasks.register("44 * * * *", "44", TimeZone.getDefault());
+		Calendar start = Calendar.getInstance();
+		start.add(Calendar.MINUTE, -60);
+		
+		List<CronTask> t = tasks.getTasksToExecute(start, Calendar.getInstance());
+		Assert.assertEquals(t.size(), 2);
+	}
 	
 	@Test
 	public void test() {
